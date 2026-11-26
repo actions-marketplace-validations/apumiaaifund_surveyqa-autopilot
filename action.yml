@@ -17,7 +17,7 @@ inputs:
   notary_api_url:
     description: 'AI Notary Edge API endpoint'
     required: false
-    default: 'https://workers.dev'
+    default: 'https://ainotary-edge.apumia-notary.workers.dev/v1/stamp'
   notary_api_key:
     description: 'Commercial license key from Lava.top'
     required: true

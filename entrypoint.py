@@ -33,7 +33,10 @@ def _stamp_notary(
     )
     if r.status_code in (401, 403):
         sys.exit(1)
-    return str(r.json().get("certificate_url", f"hash://{bundle_hash}"))
+    try:
+        return str(r.json().get("certificate_url", f"hash://{bundle_hash}"))
+    except ValueError:
+        return f"hash://{bundle_hash}"
 
 
 def _publish_summary(res: AuditResult, bundle_hash: str, cert: str) -> None:
