@@ -24,7 +24,7 @@ def _stamp_notary(
         return "Skipped"
     r = httpx.post(
         n_url,
-        headers={"Authorization": f"Bearer {n_key}"},
+        headers={"Authorization": f"Bearer {n_key}", "User-Agent": "SurveyQA-Autopilot/1.0"},
         json={
             "sha256_hash": bundle_hash,
             "metadata": {"repository": os.getenv("GITHUB_REPOSITORY", "")},
