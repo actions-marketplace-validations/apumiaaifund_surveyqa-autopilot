@@ -1,11 +1,26 @@
-name: 'SurveyQA + AI Notary'
-description: 'Auto QA & SHA-256 Proof'
+name: 'SurveyQA Math & Logic Autopilot + AI Notary'
+author: 'APUMIA AI Fund'
+description: 'Deterministic Decimal quota math, 500-respondent pre-launch simulator & SHA-256 cryptographic proof'
+branding:
+  icon: 'check-circle'
+  color: 'green'
 inputs:
-  spec_path: {required: true}
-  survey_path: {required: false}
-  responses_path: {required: false}
-  notary_api_url: {default: 'https://ainotary-edge.apumia-notary.workers.dev/v1/stamp'}
-  notary_api_key: {required: true}
+  spec_path:
+    description: 'Path to questionnaire specification (.docx)'
+    required: true
+  survey_path:
+    description: 'Path to survey XML script (.xml)'
+    required: false
+  responses_path:
+    description: 'Path to survey responses export (.csv)'
+    required: false
+  notary_api_url:
+    description: 'AI Notary Edge API endpoint'
+    required: false
+    default: 'https://workers.dev'
+  notary_api_key:
+    description: 'Commercial license key from Lava.top'
+    required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'
