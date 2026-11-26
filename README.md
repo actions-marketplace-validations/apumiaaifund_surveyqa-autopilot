@@ -1,8 +1,8 @@
 # SurveyQA Autopilot + AI Notary
 
-[![Get License on Lava.top](https://img.shields.io/badge/Get_Pro_(SPSS_%2B_PDF)-Lava.top_%24199-8b5cf6?style=for-the-badge)](https://lava.top)
+[![Get Starter ($49)](https://img.shields.io/badge/Starter_License-Lava.top_%2449-10b981?style=for-the-badge)](https://app.lava.top/products/5c686e06-3d47-4f87-99ad-3c3c0e1526a3) [![Get Pro SPSS+PDF ($199)](https://img.shields.io/badge/Pro_(SPSS_%2B_PDF)-Lava.top_%24199-8b5cf6?style=for-the-badge)](https://app.lava.top/products/723f8cbd-ff84-4d4a-aa30-83c15cf46400) [![Live Interactive Stand](https://img.shields.io/badge/Live_Demo-Interactive_Stand-38bdf8?style=for-the-badge)](https://apumiaaifund.github.io/surveyqa-autopilot/)
 
-[![Live Interactive Stand](https://img.shields.io/badge/Get_Pro_(SPSS_%2B_PDF)-Lava.top_%24199-8b5cf6?style=for-the-badge)](https://github.io)
+[![Get Starter ($49)](https://img.shields.io/badge/Starter_License-Lava.top_%2449-10b981?style=for-the-badge)](https://app.lava.top/products/5c686e06-3d47-4f87-99ad-3c3c0e1526a3) [![Get Pro SPSS+PDF ($199)](https://img.shields.io/badge/Pro_(SPSS_%2B_PDF)-Lava.top_%24199-8b5cf6?style=for-the-badge)](https://app.lava.top/products/723f8cbd-ff84-4d4a-aa30-83c15cf46400) [![Live Interactive Stand](https://img.shields.io/badge/Live_Demo-Interactive_Stand-38bdf8?style=for-the-badge)](https://apumiaaifund.github.io/surveyqa-autopilot/)
 
 **100% Automated Survey Math, Quota Verification & Cryptographic SHA-256 Proof for GitHub.**
 
