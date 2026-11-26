@@ -19,7 +19,7 @@ jobs:
         with:
           spec_path: 'specs/questionnaire.docx'
           survey_path: 'surveys/survey.xml'
-          notary_api_url: 'https://workers.dev'
+          notary_api_url: 'https://ainotary-edge.apumia-notary.workers.dev/v1/stamp'
           notary_api_key: ${{ secrets.NOTARY_API_KEY }}
 ```
 
