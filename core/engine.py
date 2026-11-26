@@ -232,6 +232,56 @@ def _evaluate_ai_text(comp: pd.DataFrame) -> list[MetricCheck]:
     return checks
 
 
+
+def _evaluate_duplicates(comp: pd.DataFrame) -> list[MetricCheck]:
+    id_col = next((c for c in comp.columns if c.lower() in {"respondent_id", "id", "ip", "ip_address"}), None)
+    if not id_col or len(comp) == 0:
+        return []
+    dups = int(comp[id_col].dropna().duplicated().sum())
+    rate = Decimal((dups * 10000) // len(comp)).scaleb(-2)
+    if rate > Decimal(2):
+        return [
+            MetricCheck(
+                category="Quality",
+                metric_name=f"Duplicate {id_col}",
+                expected="<=2.0%",
+                actual=f"{rate}%",
+                delta=f"+{rate - Decimal(2)}%",
+                status="FAIL",
+            )
+        ]
+    return []
+
+
+def _has_profanity(val: Any) -> bool:
+    words = {"fuck", "shit", "bitch", "asshole", "spam", "asdf", "qwerty"}
+    tokens = set(re.findall(r"[a-z]+", str(val).lower()))
+    return bool(tokens & words)
+
+
+def _evaluate_profanity(comp: pd.DataFrame) -> list[MetricCheck]:
+    checks: list[MetricCheck] = []
+    text_cols = [c for c in comp.columns if re.search(r"(oe|open|text|comment)", c, re.IGNORECASE)]
+    for col in text_cols:
+        series = comp[col].dropna()
+        if len(series) == 0:
+            continue
+        hits = int(series.apply(_has_profanity).sum())
+        rate = Decimal((hits * 10000) // len(series)).scaleb(-2)
+        if rate > Decimal(3):
+            checks.append(
+                MetricCheck(
+                    category="Quality",
+                    metric_name=f"Profanity/Spam {col}",
+                    expected="<=3.0%",
+                    actual=f"{rate}%",
+                    delta=f"+{rate - Decimal(3)}%",
+                    status="FAIL",
+                )
+            )
+    return checks
+
+
 def run_audit(df: pd.DataFrame, spec: dict[str, Any]) -> AuditResult:
     scol = next((c for c in df.columns if c.lower() in {"status", "vstatus"}), None)
     comp = (
@@ -262,6 +312,8 @@ def run_audit(df: pd.DataFrame, spec: dict[str, Any]) -> AuditResult:
         + _evaluate_randomization(comp, spec["rand"])
         + _evaluate_straightlining(comp)
         + _evaluate_ai_text(comp)
+        + _evaluate_duplicates(comp)
+        + _evaluate_profanity(comp)
     )
     fails = sum(1 for c in checks if c.status == "FAIL")
     return AuditResult(
