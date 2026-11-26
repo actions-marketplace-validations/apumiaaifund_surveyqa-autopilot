@@ -12,6 +12,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Generate Valid Sample Docx
+        run: |
+          pip install -q python-docx
+          python3 -c '
+          from docx import Document
+          doc = Document()
+          doc.add_paragraph("Target LOI: 10 min [RANDOMIZE: Q2]")
+          t = doc.add_table(rows=3, cols=3)
+          t.rows[0].cells[0].text, t.rows[0].cells[1].text, t.rows[0].cells[2].text = "Quota Var", "Category", "%"
+          t.rows[1].cells[0].text, t.rows[1].cells[1].text, t.rows[1].cells[2].text = "Q1", "1", "50"
+          t.rows[2].cells[0].text, t.rows[2].cells[1].text, t.rows[2].cells[2].text = "", "2", "50"
+          doc.save("specs/sample.docx")
+          '
+
       - name: Run SurveyQA Autopilot on Sample Survey
         uses: ./
         with:
