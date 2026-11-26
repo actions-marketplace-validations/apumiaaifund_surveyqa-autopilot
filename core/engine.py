@@ -173,6 +173,65 @@ def _evaluate_randomization(
     return checks
 
 
+def _evaluate_straightlining(comp: pd.DataFrame) -> list[MetricCheck]:
+    checks: list[MetricCheck] = []
+    prefixes = sorted(
+        {re.sub(r"[_r]\d+$", "", c) for c in comp.columns if re.search(r"[_r]\d+$", c)}
+    )
+    for pref in prefixes:
+        cols = [c for c in comp.columns if c.startswith((f"{pref}_", f"{pref}r"))]
+        if len(cols) < 4:
+            continue
+        sub = comp[cols].dropna()
+        if len(sub) == 0:
+            continue
+        same_rows = int((sub.nunique(axis=1) == 1).sum())
+        rate = Decimal((same_rows * 10000) // len(sub)).scaleb(-2)
+        if rate > Decimal(10):
+            checks.append(
+                MetricCheck(
+                    category="Quality",
+                    metric_name=f"Straight-lining {pref}",
+                    expected="<=10.0%",
+                    actual=f"{rate}%",
+                    delta=f"+{rate - Decimal(10)}%",
+                    status="FAIL",
+                )
+            )
+    return checks
+
+
+def _is_llm_text(val: Any) -> bool:
+    text = str(val).strip().lower()
+    if len(text) < 40:
+        return False
+    markers = ("as an ai", "in conclusion", "furthermore,", "additionally,", "overall,")
+    return any(m in text for m in markers)
+
+
+def _evaluate_ai_text(comp: pd.DataFrame) -> list[MetricCheck]:
+    checks: list[MetricCheck] = []
+    text_cols = [c for c in comp.columns if re.search(r"(oe|open|text|comment)", c, re.IGNORECASE)]
+    for col in text_cols:
+        series = comp[col].dropna()
+        if len(series) == 0:
+            continue
+        ai_hits = int(series.apply(_is_llm_text).sum())
+        rate = Decimal((ai_hits * 10000) // len(series)).scaleb(-2)
+        if rate > Decimal(5):
+            checks.append(
+                MetricCheck(
+                    category="Quality",
+                    metric_name=f"AI Text {col}",
+                    expected="<=5.0%",
+                    actual=f"{rate}%",
+                    delta=f"+{rate - Decimal(5)}%",
+                    status="FAIL",
+                )
+            )
+    return checks
+
+
 def run_audit(df: pd.DataFrame, spec: dict[str, Any]) -> AuditResult:
     scol = next((c for c in df.columns if c.lower() in {"status", "vstatus"}), None)
     comp = (
@@ -198,8 +257,11 @@ def run_audit(df: pd.DataFrame, spec: dict[str, Any]) -> AuditResult:
             ],
         )
 
-    checks = _evaluate_quotas(comp, spec["quotas"]) + _evaluate_randomization(
-        comp, spec["rand"]
+    checks = (
+        _evaluate_quotas(comp, spec["quotas"])
+        + _evaluate_randomization(comp, spec["rand"])
+        + _evaluate_straightlining(comp)
+        + _evaluate_ai_text(comp)
     )
     fails = sum(1 for c in checks if c.status == "FAIL")
     return AuditResult(
