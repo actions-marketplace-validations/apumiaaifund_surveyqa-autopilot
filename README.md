@@ -1,8 +1,8 @@
 # SurveyQA Autopilot + AI Notary
 
-[![Get License on Lava.top](https://shields.io)](https://lava.top)
+[![Get License on Lava.top](https://img.shields.io/badge/Get_Pro_(SPSS_%2B_PDF)-Lava.top_%24199-8b5cf6?style=for-the-badge)](https://lava.top)
 
-[![Live Interactive Stand](https://shields.io)](https://github.io)
+[![Live Interactive Stand](https://img.shields.io/badge/Get_Pro_(SPSS_%2B_PDF)-Lava.top_%24199-8b5cf6?style=for-the-badge)](https://github.io)
 
 **100% Automated Survey Math, Quota Verification & Cryptographic SHA-256 Proof for GitHub.**
 
