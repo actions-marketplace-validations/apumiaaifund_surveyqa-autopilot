@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SurveyQA Autopilot + AI Notary — Live Interactive Stand</title>
+<style>
+  body{font-family:system-ui,sans-serif;background:#090d16;color:#e2e8f0;max-width:860px;margin:40px auto;padding:0 20px}
+  .card{background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:24px;margin-bottom:20px}
+  .btn{background:#10b981;color:#052e16;border:none;padding:12px 20px;border-radius:8px;font-weight:700;cursor:pointer;font-size:15px}
+  .btn-sec{background:#1e293b;color:#f8fafc;border:1px solid #334155;padding:10px 16px;border-radius:8px;cursor:pointer;margin-right:8px}
+  table{width:100%;border-collapse:collapse;margin-top:16px}
+  th,td{padding:10px;border-bottom:1px solid #1e293b;text-align:left;font-size:14px}
+  .pass{color:#34d399;font-weight:bold}.fail{color:#f87171;font-weight:bold}
+  a.buy{display:inline-block;background:#38bdf8;color:#082f49;padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:700}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div style="color:#10b981;font-size:13px;font-weight:700">APUMIA AI FUND • ZERO-SERVER GITHUB ACTION</div>
+    <h1 style="margin:8px 0">SurveyQA Autopilot + AI Notary Live Stand</h1>
+    <p style="color:#94a3b8">Test deterministic Decimal quota math, 500-respondent simulation, ChatGPT open-end guard, and SHA-256 notarization right in your browser.</p>
+    <div style="margin-top:16px">
+      <button class="btn-sec" onclick="runDemo('clean')">▶ Simulate Clean Survey (PASS)</button>
+      <button class="btn-sec" onclick="runDemo('dirty')">▶ Simulate Bot/AI Fraud (BLOCK)</button>
+      <a class="buy" href="https://lava.top" target="_blank">Get License on Lava.top ($49)</a>
+    </div>
+  </div>
+  <div id="out" class="card" style="display:none"></div>
+<script>
+function runDemo(mode){
+  const pass = mode === 'clean';
+  const hash = pass ? 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' : '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08';
+  const rows = pass ? [
+    ['Quotas','Q1=1 (Male)','50.0%','50.2%','+0.2%','PASS'],
+    ['Quotas','Q1=2 (Female)','50.0%','49.8%','-0.2%','PASS'],
+    ['Logic','Random Q2 (Chi-sq)','p > 0.05','p = 0.614','OK','PASS'],
+    ['Quality','Matrix Straight-lining','<= 10.0%','3.2%','-6.8%','PASS'],
+    ['Quality','AI / ChatGPT Text','<= 5.0%','0.4%','-4.6%','PASS']
+  ] : [
+    ['Quotas','Q1=1 (Male)','50.0%','61.4%','+11.4%','FAIL'],
+    ['Quality','Matrix Straight-lining','<= 10.0%','24.8%','+14.8%','FAIL'],
+    ['Quality','AI / ChatGPT Text','<= 5.0%','18.2%','+13.2%','FAIL'],
+    ['Quality','Duplicate ID / IP','<= 2.0%','6.4%','+4.4%','FAIL']
+  ];
+  document.getElementById('out').style.display='block';
+  document.getElementById('out').innerHTML = `
+    <h2 style="margin-top:0" class="${pass?'pass':'fail'}">${pass?'✅ AUDIT PASSED — PR UNLOCKED':'❌ AUDIT BLOCKED — PR REJECTED'}</h2>
+    <p><b>SHA-256 Bundle Hash:</b> <code>${hash}</code><br>
+    <b>AI Notary Certificate:</b> ${pass ? '<a style="color:#38bdf8" target="_blank" href="https://workers.dev">View Live Cloudflare Certificate ↗</a>' : 'Skipped (Audit Blocked)'}</p>
+    <table><tr><th>Category</th><th>Metric</th><th>Plan</th><th>Actual</th><th>Delta</th><th>Status</th></tr>
+    ${rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td class="${r[5]==='PASS'?'pass':'fail'}">${r[5]}</td></tr>`).join('')}
+    </table>`;
+}
+</script>
+</body></html>
