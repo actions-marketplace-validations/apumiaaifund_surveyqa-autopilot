@@ -2,6 +2,8 @@
 
 [![Get License on Lava.top](https://shields.io)](https://lava.top)
 
+[![Live Interactive Stand](https://shields.io)](https://github.io)
+
 **100% Automated Survey Math, Quota Verification & Cryptographic SHA-256 Proof for GitHub.**
 
 Run deterministic survey QA inside your GitHub Actions on every Pull Request and data export — zero external servers, zero respondent PII leaves your repository.
