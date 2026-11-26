@@ -1,0 +1,1 @@
+<survey><radio label="Q1"><row value="1"/><row value="2"/></radio><radio label="Q2" shuffle="rows"><row value="1"/><row value="2"/><row value="3"/></radio></survey>

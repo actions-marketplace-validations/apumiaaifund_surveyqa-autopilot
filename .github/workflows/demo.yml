@@ -1,0 +1,20 @@
+name: Live Demo Audit (Self-Test)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  demo-survey-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run SurveyQA Autopilot on Sample Survey
+        uses: ./
+        with:
+          spec_path: 'specs/sample.docx'
+          survey_path: 'surveys/sample.xml'
+          notary_api_key: ${{ secrets.NOTARY_API_KEY }}
