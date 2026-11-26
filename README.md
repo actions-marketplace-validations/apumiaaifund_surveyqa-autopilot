@@ -20,7 +20,7 @@ jobs:
           spec_path: 'specs/questionnaire.docx'
           survey_path: 'surveys/survey.xml'
           notary_api_url: 'https://ainotary.io'
-          notary_api_key: \${{ secrets.NOTARY_API_KEY }}
+          notary_api_key: ${{ secrets.NOTARY_API_KEY }}
 ```
 
 ## What It Verifies
