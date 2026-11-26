@@ -70,6 +70,7 @@ def compile_spec(docx_path: str) -> dict[str, Any]:
 
 
 def simulate_survey(xml_path: str, n: int = 500) -> pd.DataFrame:
+    random.seed(42)
     root = ET.parse(xml_path).getroot()
     questions = [
         {
