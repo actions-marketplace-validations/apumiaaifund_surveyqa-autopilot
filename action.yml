@@ -4,7 +4,7 @@ inputs:
   spec_path: {required: true}
   survey_path: {required: false}
   responses_path: {required: false}
-  notary_api_url: {default: 'https://ainotary.io'}
+  notary_api_url: {default: 'https://workers.dev'}
   notary_api_key: {required: true}
 runs:
   using: 'docker'
